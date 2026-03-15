@@ -16,16 +16,16 @@ export function ObjectiveCard({ objective, period, onUpdate }) {
   const percent = computeObjectivePercent(objective);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full text-left px-4 py-4 flex items-center gap-3 hover:bg-gray-50 transition-colors"
+        className="w-full text-left px-4 py-4 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
       >
         <span
           className="w-3 h-3 rounded-full shrink-0"
           style={{ backgroundColor: objective.color }}
         />
-        <span className="text-sm font-semibold text-gray-900 flex-1 leading-snug">
+        <span className="text-sm font-semibold text-gray-900 dark:text-gray-100 flex-1 leading-snug">
           {objective.title}
         </span>
         <span
@@ -54,8 +54,8 @@ export function ObjectiveCard({ objective, period, onUpdate }) {
         </svg>
       </button>
       {expanded && (
-        <div className="px-4 pb-4 border-t border-gray-100">
-          <div className="divide-y divide-gray-100 pt-3">
+        <div className="px-4 pb-4 border-t border-gray-100 dark:border-gray-700">
+          <div className="divide-y divide-gray-100 dark:divide-gray-700 pt-3">
             {objective.keyResults.map((kr) => (
               <KeyResult
                 key={kr.id}
