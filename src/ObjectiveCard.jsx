@@ -11,7 +11,7 @@ function computeObjectivePercent(objective) {
   return Math.round(total / krs.length);
 }
 
-export function ObjectiveCard({ objective, period, onUpdate }) {
+export function ObjectiveCard({ objective, period, onUpdate, onSet }) {
   const [expanded, setExpanded] = useState(false);
   const percent = computeObjectivePercent(objective);
 
@@ -66,6 +66,9 @@ export function ObjectiveCard({ objective, period, onUpdate }) {
                 }
                 onDecrement={() =>
                   onUpdate(period, objective.id, kr.id, kr.unit === "%" ? -5 : -1)
+                }
+                onSet={(value) =>
+                  onSet(period, objective.id, kr.id, value)
                 }
               />
             ))}

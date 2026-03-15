@@ -21,7 +21,7 @@ const tabs = [
 export default function App() {
   const { authed, login } = useAuth();
   const [activeTab, setActiveTab] = useState("quarterly");
-  const { data, updateKeyResult } = useOkrState();
+  const { data, updateKeyResult, setKeyResult } = useOkrState();
   const periodData = data[activeTab];
   const overallPercent = computeOverallPercent(periodData);
 
@@ -83,6 +83,7 @@ export default function App() {
               objective={objective}
               period={activeTab}
               onUpdate={updateKeyResult}
+              onSet={setKeyResult}
             />
           ))}
         </div>

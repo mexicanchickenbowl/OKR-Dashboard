@@ -46,5 +46,20 @@ export function useOkrState() {
     });
   }, []);
 
-  return { data, updateKeyResult };
+  const setKeyResult = useCallback((period, objectiveId, krId, value) => {
+    setData((prev) => {
+      const next = structuredClone(prev);
+      const objective = next[period].objectives.find(
+        (o) => o.id === objectiveId
+      );
+      if (!objective) return prev;
+      const kr = objective.keyResults.find((k) => k.id === krId);
+      if (!kr) return prev;
+      const clamped = Math.max(0, Math.min(kr.target, value));
+      kr.current = clamped;
+      return next;
+    });
+  }, []);
+
+  return { data, updateKeyResult, setKeyResult };
 }
