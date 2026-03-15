@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useOkrState } from "./useOkrState";
 import { ObjectiveCard } from "./ObjectiveCard";
+import { PasswordGate, useAuth } from "./PasswordGate";
 
 function computeOverallPercent(periodData) {
   const allKrs = periodData.objectives.flatMap((o) => o.keyResults);
@@ -18,10 +19,15 @@ const tabs = [
 ];
 
 export default function App() {
+  const { authed, login } = useAuth();
   const [activeTab, setActiveTab] = useState("quarterly");
   const { data, updateKeyResult } = useOkrState();
   const periodData = data[activeTab];
   const overallPercent = computeOverallPercent(periodData);
+
+  if (!authed) {
+    return <PasswordGate onLogin={login} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f9fafb] dark:bg-gray-950">
