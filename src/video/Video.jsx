@@ -1,6 +1,13 @@
 import React from 'react';
 import { Composition, Sequence, Audio, staticFile } from 'remotion';
 import { SCENE_DURATIONS, TOTAL_FRAMES, FPS, WIDTH, HEIGHT } from './script';
+import {
+  SHORT_SCENE_DURATIONS,
+  SHORT_TOTAL_FRAMES,
+  SHORT_FPS,
+  SHORT_WIDTH,
+  SHORT_HEIGHT,
+} from './script-short';
 
 import { IntroScene } from './scenes/IntroScene';
 import { HookScene } from './scenes/HookScene';
@@ -13,6 +20,11 @@ import { EvidenceRecapScene } from './scenes/EvidenceRecapScene';
 import { SummaryScene } from './scenes/SummaryScene';
 import { CTAScene } from './scenes/CTAScene';
 import { OutroScene } from './scenes/OutroScene';
+
+import { HookShortScene } from './scenes/short/HookShortScene';
+import { EvidenceShortScene } from './scenes/short/EvidenceShortScene';
+import { WhoBenefitsShortScene } from './scenes/short/WhoBenefitsShortScene';
+import { TakeawayShortScene } from './scenes/short/TakeawayShortScene';
 
 /**
  * Attempts to load a voiceover audio file for a scene.
@@ -66,17 +78,62 @@ const EndoExplainer = () => {
 };
 
 /**
- * Remotion Root — registers the composition.
+ * Short-form (60 s, 9:16 vertical) — sequences 4 scenes.
+ */
+const shortOffsets = (() => {
+  const d = SHORT_SCENE_DURATIONS;
+  const keys = ['hook', 'evidence', 'whoBenefits', 'takeaway'];
+  let acc = 0;
+  const map = {};
+  for (const k of keys) {
+    map[k] = acc;
+    acc += d[k];
+  }
+  return map;
+})();
+
+const EndoShort = () => {
+  const d = SHORT_SCENE_DURATIONS;
+  return (
+    <>
+      <Sequence from={shortOffsets.hook} durationInFrames={d.hook} name="hook">
+        <HookShortScene />
+      </Sequence>
+      <Sequence from={shortOffsets.evidence} durationInFrames={d.evidence} name="evidence">
+        <EvidenceShortScene />
+      </Sequence>
+      <Sequence from={shortOffsets.whoBenefits} durationInFrames={d.whoBenefits} name="whoBenefits">
+        <WhoBenefitsShortScene />
+      </Sequence>
+      <Sequence from={shortOffsets.takeaway} durationInFrames={d.takeaway} name="takeaway">
+        <TakeawayShortScene />
+      </Sequence>
+    </>
+  );
+};
+
+/**
+ * Remotion Root — registers both compositions.
  */
 export const RemotionVideo = () => {
   return (
-    <Composition
-      id="EndoExplainer"
-      component={EndoExplainer}
-      durationInFrames={TOTAL_FRAMES}
-      fps={FPS}
-      width={WIDTH}
-      height={HEIGHT}
-    />
+    <>
+      <Composition
+        id="EndoExplainer"
+        component={EndoExplainer}
+        durationInFrames={TOTAL_FRAMES}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="EndoShort"
+        component={EndoShort}
+        durationInFrames={SHORT_TOTAL_FRAMES}
+        fps={SHORT_FPS}
+        width={SHORT_WIDTH}
+        height={SHORT_HEIGHT}
+      />
+    </>
   );
 };

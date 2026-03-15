@@ -2,7 +2,7 @@ import React from 'react';
 import { useCurrentFrame, interpolate, Easing } from 'remotion';
 import { COLORS, WIDTH, HEIGHT } from '../script';
 
-export const GradientBackground = ({ children }) => {
+export const GradientBackground = ({ children, width, height }) => {
   const frame = useCurrentFrame();
 
   // Slow pulsing gradient shift
@@ -13,8 +13,8 @@ export const GradientBackground = ({ children }) => {
   return (
     <div
       style={{
-        width: WIDTH,
-        height: HEIGHT,
+        width: width || WIDTH,
+        height: height || HEIGHT,
         background: `linear-gradient(${gradAngle}deg, ${COLORS.bgDark} 0%, ${COLORS.gradientStart} 40%, ${COLORS.gradientEnd} 100%)`,
         position: 'relative',
         overflow: 'hidden',
