@@ -21,7 +21,17 @@ const tabs = [
 export default function App() {
   const { authed, login } = useAuth();
   const [activeTab, setActiveTab] = useState("quarterly");
-  const { data, updateKeyResult, setKeyResult } = useOkrState();
+  const {
+    data,
+    updateKeyResult,
+    setKeyResult,
+    updateObjective,
+    addObjective,
+    removeObjective,
+    updateKr,
+    addKr,
+    removeKr,
+  } = useOkrState();
   const periodData = data[activeTab];
   const overallPercent = computeOverallPercent(periodData);
 
@@ -84,9 +94,22 @@ export default function App() {
               period={activeTab}
               onUpdate={updateKeyResult}
               onSet={setKeyResult}
+              onUpdateObjective={updateObjective}
+              onRemoveObjective={removeObjective}
+              onUpdateKr={updateKr}
+              onAddKr={addKr}
+              onRemoveKr={removeKr}
             />
           ))}
         </div>
+
+        {/* Add objective */}
+        <button
+          onClick={() => addObjective(activeTab)}
+          className="mt-4 w-full py-3 text-sm font-medium text-gray-500 dark:text-gray-400 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl hover:bg-white dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+        >
+          + Add objective
+        </button>
       </div>
     </div>
   );
