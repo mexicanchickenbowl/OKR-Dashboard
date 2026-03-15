@@ -7,11 +7,18 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "remotion:preview": "remotion preview src/video/index.jsx",
+    "remotion:render": "remotion render src/video/index.jsx EndoExplainer out/endo-explainer.mp4 --codec h264 --image-format jpeg --crf 18",
+    "remotion:render-short": "remotion render src/video/index.jsx EndoShort out/endo-short-9x16.mp4 --codec h264 --image-format jpeg --crf 18",
+    "voiceover": "node src/video/generate-voiceover.js"
   },
   "dependencies": {
+    "@remotion/cli": "^4.0.435",
+    "@remotion/player": "^4.0.435",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "remotion": "^4.0.435"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
